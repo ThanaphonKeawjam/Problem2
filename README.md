@@ -3,7 +3,7 @@
 	
  A command line interface for a simple food ordering application.
 	
-	For original version : src/code/skeres.java
+ For original version : src/code/skeres.java
 	
  For improvements version : src/code/skerestaurantImprove.java
 	
