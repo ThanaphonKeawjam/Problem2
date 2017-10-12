@@ -2,19 +2,20 @@ package code;
 
 import java.util.Scanner;
 
+/**
+ * User interface for a menu and ordering system,
+ * using console interface.
+ * You can delete your order or add by delete its quantity
+ * @author Thanaphon Keawjam
+ */
+
 public class skerestaurantArrays{
 	
 	static Scanner sc = new Scanner(System.in);
 	
-	static int quanPizza,quanChicken,quanCoke,quanWater;
-	static double sum = 0,pricePizza,priceChicken,priceCoke,priceWater;
-	static int pizza = 0,chicken = 0,coke = 0,water = 0;
-	static int count1 = 0,count2 = 0,count3 = 0,count4 = 0;
-	static String checkbill = "";
-	
-	static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Reset Menu","Exit"};
+	static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
 	static double[] isPrice = {250,120,45,7};
-	static int lengthPrice = isPrice.length;
+	static int[] order = {0,0,0,0};
 	
 	static void printMenuList(){
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
@@ -29,7 +30,8 @@ public class skerestaurantArrays{
 		}
 	}
 	
-	static void printBill(int choice,int quantity,double sum){
+	static void printBill(int choice,double sum){
+		int lengthPrice = isPrice.length;
 		if (choice == 5){
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<lengthPrice; j++){
@@ -43,141 +45,111 @@ public class skerestaurantArrays{
 				System.out.println("|You got 5% discount.\t\t\t\t |");
 				sum = sum*95/100;
 			}
-			int Total = quanPizza+quanChicken+quanCoke+quanWater;
+			int Total = order[0]+order[1]+order[2]+order[3];
 			System.out.println("+--------------------------+---------+-----------+");
 			System.out.printf("|Total\t\t\t   |\t%d    |\t%7.2f  |\n",Total,sum);
 			System.out.println("+--------------------------+---------+-----------+");
-			checkBill(checkbill,sum);
-			System.out.println();
 		}
 	}
 	
 	static String printMenu(int j){
-		if (j == 0 && pizza > 0) return isMenu[j];
-		if (j == 1 && chicken > 0) return isMenu[j];
-		if (j == 2 && coke > 0) return isMenu[j];
-		if (j == 3 && water > 0) return isMenu[j];
+		if (j == 0) return isMenu[j];
+		if (j == 1) return isMenu[j];
+		if (j == 2) return isMenu[j];
+		if (j == 3) return isMenu[j];
 		return "";
 	}
 	
 	static int printQuantity(int j){
-		if (j == 0 && pizza > 0) return quanPizza;
-		if (j == 1 && chicken > 0) return quanChicken;
-		if (j == 2 && coke > 0) return quanCoke;
-		if (j == 3 && water > 0) return quanWater;
+		if (j == 0) return order[j];
+		if (j == 1) return order[j];
+		if (j == 2) return order[j];
+		if (j == 3) return order[j];
 		return 0;
 	}
 	
 	static double printPrice(int j){
-		if (j == 0 && pizza > 0) return isPrice[j]*quanPizza;
-		if (j == 1 && chicken > 0) return isPrice[j]*quanChicken;
-		if (j == 2 && coke > 0) return isPrice[j]*quanCoke;
-		if (j == 3 && water > 0) return isPrice[j]*quanWater;
+		if (j == 0) return isPrice[j]*order[j];
+		if (j == 1) return isPrice[j]*order[j];
+		if (j == 2) return isPrice[j]*order[j];
+		if (j == 3) return isPrice[j]*order[j];
 		return 0;
 	}
 	
-	static void checkBill(String checkbill, double sum){
-		double getmoney;
-		System.out.print("Do you want to check bill?(y/n) ");
-		checkbill = sc.next();
-		if (checkbill.equals("y")){
-			do{
+	static void payMoney(double sum){
+		double getMoney;
+		do{
 			System.out.print("Get money(Baht): ");
-			getmoney = sc.nextDouble();
-			if (getmoney < sum){
+			getMoney = sc.nextDouble();
+			if (getMoney < sum){
 				System.out.println("Not enough money.Try again.");
 				System.out.println();
 			}
 			}
-			while (getmoney < sum);
-			System.out.printf("Change(Baht): %.2f\n",getmoney-sum);
-		} if (!checkbill.equals("y") && !checkbill.equals("n")){
-			System.out.println("Wrong word!!");
-			System.out.println();
-			checkBill(checkbill,sum);
-		}
+			while (getMoney < sum);
+			System.out.printf("Change(Baht): %.2f\n",getMoney-sum);
 	}
 
 	static double pizzaMenu(int choice,int quantity){
+		double price = 0;
 		if (choice == 1){
-			count1 = count1+quantity;
-			pricePizza = count1*250;
-			quanPizza = count1;
-			pizza++;
+			order[0] = order[0] + quantity;
+			price = order[0]*isPrice[0];
 		}
-		return pricePizza;
+		return price;
 	}
 	
 	static double chickenMenu(int choice,int quantity){
+		double price = 0;
 		if (choice == 2){
-			count2 = count2+quantity;
-			priceChicken = count2*120;
-			quanChicken = count2;
-			chicken++;
+			order[1] = order[1] + quantity;
+			price = order[1]*isPrice[1];
 		}
-		return priceChicken;
+		return price;
 	}
 	
 	static double cokeMenu(int choice,int quantity){
+		double price = 0;
 		if (choice == 3){
-			count3 = count3+quantity;
-			priceCoke = count3*45;
-			quanCoke = count3;
-			coke++;
+			order[2] = order[2] + quantity;
+			price = order[2]*isPrice[2];
 		}
-		return priceCoke;
+		return price;
 	}
 	
 	static double waterMenu(int choice,int quantity){
+		double price = 0; 
 		if (choice == 4){
-			count4 = count4+quantity;
-			priceWater = count4*7;
-			quanWater = count4;
-			water++;
+			order[3] = order[3] + quantity;
+			price = order[3]*isPrice[3];
 		}
-		return priceWater;
-	}
-	
-	static void resetMenu(int menu){
-		if (menu == 6){
-		sum = 0;
-		count1 = 0;count2 = 0;count3 = 0;count4 = 0;
-		coke = 0;chicken = 0;coke = 0;water = 0;
-		quanPizza = 0;quanChicken = 0;quanCoke = 0;quanWater = 0;
-		pricePizza = 0;priceChicken = 0;priceCoke = 0;priceWater = 0;
-		System.out.println("Reset menu!!!!");
-		System.out.println();
-		}
+		return price;
 	}
 	
 	static void makeOrder(){
 		printMenuList();
+		double sum = 0;
 		int choice,quantity = 0;
 		do {
-			do {
-				do {
-		System.out.print("Enter your Choice: ");
-		choice = sc.nextInt();
-		resetMenu(choice);
-		if (choice > 7){
-			System.out.println("Incorrect menu!!\nTry again.");
-			System.out.println();
-		}
-				}
-				while(choice > 7 || choice == 6);
-		printBill(choice,quantity,sum);
+			System.out.print("Enter your Choice: ");
+			choice = sc.nextInt();
+			printBill(choice,sum);
+			if (choice > isMenu.length){
+				System.out.println("Incorrect menu!!\nTry again.");
+				continue;
+			}else if (choice == isMenu.length){
+				System.out.print("==== Thank you ====");
+				System.exit(0);
+			}else if (choice == isMenu.length-1){
+				payMoney(sum);
+				System.out.print("==== Thank you ====");
+				System.exit(0);
+			}else if (choice < isPrice.length+1){
+			System.out.print("Enter Quantity: ");
+			quantity = sc.nextInt();
 			}
-			while (choice == 5);
-		if (choice == 7){
-			System.out.print("==== Thank you ====");
-			break;
-		}
-		System.out.print("Enter Quantity: ");
-		quantity = sc.nextInt();
-		sum = pizzaMenu(choice,quantity)+chickenMenu(choice,quantity)+cokeMenu(choice,quantity)+waterMenu(choice,quantity);
-		System.out.println();
-		}
-		while (choice != 7 || choice < 7);
+			sum = sum+pizzaMenu(choice,quantity)+chickenMenu(choice,quantity)+cokeMenu(choice,quantity)+waterMenu(choice,quantity);
+		} while(choice != isMenu.length || choice < isMenu.length);
 	}
 	
 	public static void main(String[] args) {
