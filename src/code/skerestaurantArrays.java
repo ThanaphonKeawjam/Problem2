@@ -11,13 +11,14 @@ import java.util.Scanner;
 
 public class skerestaurantArrays{
 	
-	static Scanner sc = new Scanner(System.in);
+	public static Scanner sc = new Scanner(System.in);
 	
-	static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
-	static double[] isPrice = {250,120,45,7};
-	static int[] order = {0,0,0,0};
+	// if you want to add other menu, add it before Total menu
+	public static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
+	static double[] isPrice = {250.00,120.00,45.00,7.00};
+	public static int[] order = {0,0,0,0};
 	
-	static void printMenuList(){
+	public static void printMenuList(){
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
 		int index = 0;
 		for (int i = 0; i<isMenu.length; i++){
@@ -30,8 +31,9 @@ public class skerestaurantArrays{
 		}
 	}
 	
-	static void printBill(int choice,double sum){
+	public static double printOrder(int choice,double sum){
 		int lengthPrice = isPrice.length;
+		int Total = 0;
 		if (choice == 5){
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<lengthPrice; j++){
@@ -45,14 +47,17 @@ public class skerestaurantArrays{
 				System.out.println("|You got 5% discount.\t\t\t\t |");
 				sum = sum*95/100;
 			}
-			int Total = order[0]+order[1]+order[2]+order[3];
+			for (int i = 0; i<order.length; i++){
+			Total = Total + order[i];
+			}
 			System.out.println("+--------------------------+---------+-----------+");
 			System.out.printf("|Total\t\t\t   |\t%d    |\t%7.2f  |\n",Total,sum);
 			System.out.println("+--------------------------+---------+-----------+");
 		}
+		return sum;
 	}
 	
-	static String printMenu(int j){
+	public static String printMenu(int j){
 		if (j == 0) return isMenu[j];
 		if (j == 1) return isMenu[j];
 		if (j == 2) return isMenu[j];
@@ -60,7 +65,7 @@ public class skerestaurantArrays{
 		return "";
 	}
 	
-	static int printQuantity(int j){
+	public static int printQuantity(int j){
 		if (j == 0) return order[j];
 		if (j == 1) return order[j];
 		if (j == 2) return order[j];
@@ -68,7 +73,7 @@ public class skerestaurantArrays{
 		return 0;
 	}
 	
-	static double printPrice(int j){
+	public static double printPrice(int j){
 		if (j == 0) return isPrice[j]*order[j];
 		if (j == 1) return isPrice[j]*order[j];
 		if (j == 2) return isPrice[j]*order[j];
@@ -76,64 +81,47 @@ public class skerestaurantArrays{
 		return 0;
 	}
 	
-	static void payMoney(double sum){
+	public static void payMoney(double realPrice){
 		double getMoney;
 		do{
+			if (realPrice >= 1200) realPrice = realPrice*95/100;
 			System.out.print("Get money(Baht): ");
 			getMoney = sc.nextDouble();
-			if (getMoney < sum){
+			if (getMoney < realPrice){
 				System.out.println("Not enough money.Try again.");
 				System.out.println();
 			}
 			}
-			while (getMoney < sum);
-			System.out.printf("Change(Baht): %.2f\n",getMoney-sum);
+			while (getMoney < realPrice);
+			System.out.printf("Change(Baht): %.2f\n",getMoney-realPrice);
 	}
 
-	static double pizzaMenu(int choice,int quantity){
+	public static double calculatePrice(int choice, int quantity){
 		double price = 0;
-		if (choice == 1){
-			order[0] = order[0] + quantity;
-			price = order[0]*isPrice[0];
+		switch (choice){
+		case 1 : order[0] = order[0] + quantity;
+						 price = order[0]*isPrice[0];
+						 break;
+		case 2 : order[1] = order[1] + quantity;
+				 price = order[1]*isPrice[1];
+				 break;
+		case 3 : order[2] = order[2] + quantity;
+				 price = order[2]*isPrice[2];
+				 break;
+		case 4 : order[3] = order[3] + quantity;
+				 price = order[3]*isPrice[3];
 		}
 		return price;
 	}
 	
-	static double chickenMenu(int choice,int quantity){
-		double price = 0;
-		if (choice == 2){
-			order[1] = order[1] + quantity;
-			price = order[1]*isPrice[1];
-		}
-		return price;
-	}
-	
-	static double cokeMenu(int choice,int quantity){
-		double price = 0;
-		if (choice == 3){
-			order[2] = order[2] + quantity;
-			price = order[2]*isPrice[2];
-		}
-		return price;
-	}
-	
-	static double waterMenu(int choice,int quantity){
-		double price = 0; 
-		if (choice == 4){
-			order[3] = order[3] + quantity;
-			price = order[3]*isPrice[3];
-		}
-		return price;
-	}
-	
-	static void makeOrder(){
+	public static void makeOrder(){
 		printMenuList();
-		double sum = 0;
+		double sum = 0,realPrice = 0;
 		int choice,quantity = 0;
 		do {
 			System.out.print("Enter your Choice: ");
 			choice = sc.nextInt();
-			printBill(choice,sum);
+			realPrice = printOrder(choice,sum);
 			if (choice > isMenu.length){
 				System.out.println("Incorrect menu!!\nTry again.");
 				continue;
@@ -141,14 +129,14 @@ public class skerestaurantArrays{
 				System.out.print("==== Thank you ====");
 				System.exit(0);
 			}else if (choice == isMenu.length-1){
-				payMoney(sum);
+				payMoney(realPrice);
 				System.out.print("==== Thank you ====");
 				System.exit(0);
 			}else if (choice < isPrice.length+1){
 			System.out.print("Enter Quantity: ");
 			quantity = sc.nextInt();
 			}
-			sum = sum+pizzaMenu(choice,quantity)+chickenMenu(choice,quantity)+cokeMenu(choice,quantity)+waterMenu(choice,quantity);
+			sum = sum + calculatePrice(choice,quantity);
 		} while(choice != isMenu.length || choice < isMenu.length);
 	}
 	
