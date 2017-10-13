@@ -1,6 +1,8 @@
 package code;
 
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * User interface for a menu and ordering system,
@@ -34,7 +36,11 @@ public class skerestaurantArrays{
 	public static double printOrder(int choice,double sum){
 		int lengthPrice = isPrice.length;
 		int Total = 0;
+		LocalDate date = LocalDate.now();
+		LocalTime time = LocalTime.now();
 		if (choice == 5){
+			System.out.println("\t\tSKE Restaurant");
+			System.out.println("Date: " + date + "  Time: " + time);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<lengthPrice; j++){
 				if (printPrice(j) != 0){
@@ -85,6 +91,7 @@ public class skerestaurantArrays{
 		double getMoney;
 		do{
 			if (realPrice >= 1200) realPrice = realPrice*95/100;
+			
 			System.out.print("Get money(Baht): ");
 			getMoney = sc.nextDouble();
 			if (getMoney < realPrice){
