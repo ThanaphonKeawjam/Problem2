@@ -15,7 +15,7 @@ public class skerestaurantArrays{
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-	// if you want to add other menu, add it before Total menu
+	
 	public static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
 	static double[] isPrice = {250.00,120.00,45.00,7.00};
 	public static int[] order = new int[isPrice.length];
