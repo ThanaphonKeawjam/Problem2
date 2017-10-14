@@ -7,7 +7,7 @@ import java.time.LocalTime;
 /**
  * User interface for a menu and ordering system,
  * using console interface.
- * You can delete your order or add by delete its quantity
+ * 
  * @author Thanaphon Keawjam
  */
 
@@ -16,10 +16,10 @@ public class skerestaurantArrays{
 	public static Scanner sc = new Scanner(System.in);
 	
 	
-	public static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
-	static double[] isPrice = {250.00,120.00,45.00,7.00};
-	public static int[] order = new int[isPrice.length];
-	public static int[] realQuantity = new int[order.length];
+	private static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
+	private static double[] isPrice = {250.00,120.00,45.00,7.00};
+	private static int[] order = new int[isPrice.length];
+	private static int[] realQuantity = new int[isPrice.length];
 	
 	public static void printMenuList(){
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
