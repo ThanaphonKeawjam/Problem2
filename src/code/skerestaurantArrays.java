@@ -18,7 +18,8 @@ public class skerestaurantArrays{
 	// if you want to add other menu, add it before Total menu
 	public static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
 	static double[] isPrice = {250.00,120.00,45.00,7.00};
-	public static int[] order = {0,0,0,0};
+	public static int[] order = new int[isPrice.length];
+	public static int[] realQuantity = new int[order.length];
 	
 	public static void printMenuList(){
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
@@ -43,8 +44,8 @@ public class skerestaurantArrays{
 			System.out.println("Date: " + date + "  Time: " + time);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<lengthPrice; j++){
-				if (printPrice(j) != 0){
-				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",printMenu(j),printQuantity(j),printPrice(j));
+				if (isPrice[j]*order[j] != 0){
+				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",isMenu[j],order[j],isPrice[j]*order[j]);
 				}
 			}
 			if (sum >= 1200){
@@ -61,30 +62,6 @@ public class skerestaurantArrays{
 			System.out.println("+--------------------------+---------+-----------+");
 		}
 		return sum;
-	}
-	
-	public static String printMenu(int j){
-		if (j == 0) return isMenu[j];
-		if (j == 1) return isMenu[j];
-		if (j == 2) return isMenu[j];
-		if (j == 3) return isMenu[j];
-		return "";
-	}
-	
-	public static int printQuantity(int j){
-		if (j == 0) return order[j];
-		if (j == 1) return order[j];
-		if (j == 2) return order[j];
-		if (j == 3) return order[j];
-		return 0;
-	}
-	
-	public static double printPrice(int j){
-		if (j == 0) return isPrice[j]*order[j];
-		if (j == 1) return isPrice[j]*order[j];
-		if (j == 2) return isPrice[j]*order[j];
-		if (j == 3) return isPrice[j]*order[j];
-		return 0;
 	}
 	
 	public static void payMoney(double realPrice){
@@ -107,16 +84,20 @@ public class skerestaurantArrays{
 		double price = 0;
 		switch (choice){
 		case 1 : order[0] = order[0] + quantity;
-						 price = order[0]*isPrice[0];
-						 break;
+				 realQuantity[0] = order[0] - realQuantity[0];
+				 price = realQuantity[0]*isPrice[0];
+				 break;
 		case 2 : order[1] = order[1] + quantity;
-				 price = order[1]*isPrice[1];
+				 realQuantity[1] = order[1] - realQuantity[1];
+				 price = realQuantity[1]*isPrice[1];
 				 break;
 		case 3 : order[2] = order[2] + quantity;
-				 price = order[2]*isPrice[2];
+				 realQuantity[2] = order[2] - realQuantity[2];
+				 price = realQuantity[2]*isPrice[2];
 				 break;
 		case 4 : order[3] = order[3] + quantity;
-				 price = order[3]*isPrice[3];
+				 realQuantity[3] = order[3] - realQuantity[3];
+				 price = realQuantity[3]*isPrice[3];
 		}
 		return price;
 	}
