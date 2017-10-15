@@ -16,30 +16,29 @@ public class skerestaurantArrays{
 	public static Scanner sc = new Scanner(System.in);
 	
 	
-	private static String[] isMenu = {"Pizza","Chickens","Coke","Water","Total","Pay Money","Exit"};
+	private static String[] isMenu = {"Pizza","Chickens","Coke","Water"};
 	private static double[] isPrice = {250.00,120.00,45.00,7.00};
 	private static int[] order = new int[isPrice.length];
 	private static int[] realQuantity = new int[isPrice.length];
 	
 	public static void printMenuList(){
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
-		int index = 0;
 		for (int i = 0; i<isMenu.length; i++){
 			System.out.printf("%d.) %s",i+1,isMenu[i]);
-			if (index < isPrice.length){
 			System.out.printf("\t\t%6.2f Baht.",isPrice[i]);
-			}
 			System.out.println("");
-			index++;
 		}
+		System.out.println("[T] Total");
+		System.out.println("[P] Pay Money");
+		System.out.println("[E] Exit");
 	}
 	
-	public static double printOrder(int choice,double sum){
+	public static double printOrder(String choice,double sum){
 		int lengthPrice = isPrice.length;
 		int Total = 0;
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();
-		if (choice == 5){
+		if (choice.equalsIgnoreCase("T")){
 			System.out.println("\t\tSKE Restaurant");
 			System.out.println("Date: " + date + "  Time: " + time);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
@@ -79,53 +78,68 @@ public class skerestaurantArrays{
 			while (getMoney < realPrice);
 			System.out.printf("Change(Baht): %.2f\n",getMoney-realPrice);
 	}
-
-	public static double calculatePrice(int choice, int quantity){
+	
+/**
+ * Calculate prices in each menu
+ * @param choice
+ * @param quantity
+ * @return
+ */
+	public static double calculatePrice(String choice, int quantity){
 		double price = 0;
-		switch (choice){
-		case 1 : order[0] = order[0] + quantity;
-				 realQuantity[0] = order[0] - realQuantity[0];
-				 price = realQuantity[0]*isPrice[0];
-				 break;
-		case 2 : order[1] = order[1] + quantity;
-				 realQuantity[1] = order[1] - realQuantity[1];
-				 price = realQuantity[1]*isPrice[1];
-				 break;
-		case 3 : order[2] = order[2] + quantity;
-				 realQuantity[2] = order[2] - realQuantity[2];
-				 price = realQuantity[2]*isPrice[2];
-				 break;
-		case 4 : order[3] = order[3] + quantity;
-				 realQuantity[3] = order[3] - realQuantity[3];
-				 price = realQuantity[3]*isPrice[3];
+		int choice2 = Integer.parseInt(choice);
+		for (int i = 0; i < isPrice.length; i++){
+			if (choice2 == i+1){
+				order[i] = order[i] + quantity;
+				realQuantity[i] = order[i] - realQuantity[i];
+				price =  realQuantity[i] * isPrice[i];
+				break;
+			}
 		}
 		return price;
+	}
+
+	public static String checkInt(String choice){
+		String str;
+		for (int ch = 1; ch <= isPrice.length; ch++){
+			str = Integer.toString(ch);
+			if (choice.equals(str)){
+				return str;
+			}
+		}
+		return "0";
 	}
 	
 	public static void makeOrder(){
 		printMenuList();
 		double sum = 0,realPrice = 0;
-		int choice,quantity = 0;
+		int quantity = 0;
+		String choice;
 		do {
 			System.out.print("Enter your Choice: ");
-			choice = sc.nextInt();
+			choice = sc.next();
 			realPrice = printOrder(choice,sum);
-			if (choice > isMenu.length){
+			if ((!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P")) && !choice.equals(checkInt(choice))){
 				System.out.println("Incorrect menu!!\nTry again.");
 				continue;
-			}else if (choice == isMenu.length){
+			}
+			if (choice.equalsIgnoreCase("E")){
 				System.out.print("==== Thank you ====");
 				System.exit(0);
-			}else if (choice == isMenu.length-1){
+			}else 
+			if (choice.equalsIgnoreCase("P")){
 				payMoney(realPrice);
 				System.out.print("==== Thank you ====");
 				System.exit(0);
-			}else if (choice < isPrice.length+1){
+			}else 
+			if (!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P")){
 			System.out.print("Enter Quantity: ");
 			quantity = sc.nextInt();
-			}
+			}else {
+				continue;
+				}
 			sum = sum + calculatePrice(choice,quantity);
-		} while(choice != isMenu.length || choice < isMenu.length);
+		} while(!choice.equalsIgnoreCase("E"));
 	}
 	
 	public static void main(String[] args) {
