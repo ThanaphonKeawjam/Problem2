@@ -1,9 +1,0 @@
-#menu; price
-Pizza; 250.00
-Chickens; 120.00
-Sandwich; 35.00
-Spaghetti; 50.00
-Coke; 45.00
-Coffee; 50.00
-Water; 7.00
-Green-Tea; 40.00 
