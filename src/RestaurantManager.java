@@ -17,8 +17,6 @@ public class RestaurantManager{
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-//	private static String[] isMenu = {"Pizza","Chickens","Coke","Water","Coffee","Noodle"};
-//	private static double[] isPrice = {250.00,120.00,45.00,7.00,20.00,40.00};
 	public static ArrayList<String> isMenu = new ArrayList<String>();
 	public static ArrayList<Double> isPrice = new ArrayList<Double>();
 	public static int[] order = new int[1000];
@@ -95,7 +93,7 @@ public class RestaurantManager{
 				System.out.println("|You got 5% discount.\t\t\t\t |");
 				sum = sum*95/100;
 			}
-			for (int i = 0; i<order.length; i++){
+			for (int i = 0; i<isMenu.size(); i++){
 			Total = Total + order[i];
 			}
 			System.out.println("+--------------------------+---------+-----------+");
@@ -152,6 +150,11 @@ public class RestaurantManager{
 		}
 		return " ";
 	}
+	
+/**
+ * Require input choice to get quantity or print order or payment
+ * or end the program. 	
+ */
 	
 	public static void recordOrder(){
 		double sum = 0,realPrice = 0;
