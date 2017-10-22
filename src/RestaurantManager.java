@@ -33,7 +33,7 @@ public class RestaurantManager{
 		Scanner reader = new Scanner(in);
 		while (reader.hasNextLine()){
 			String line = reader.nextLine();
-			if (line.startsWith("#") || line.startsWith(" ")){
+			if (line.startsWith("#")){
 				continue;
 			}
 			String[] array = line.split("; ");
