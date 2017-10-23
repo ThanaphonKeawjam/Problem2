@@ -45,16 +45,16 @@ public class RestaurantManager{
 	
 	public static String[] getMenuItems(){
 		loadMenu();
-		ArrayList<String> listMenu = isMenu;
-		String[] itemMenu = listMenu.toArray(new String[listMenu.size()]);
+	//	ArrayList<String> listMenu = isMenu;
+		String[] itemMenu = isMenu.toArray(new String[isMenu.size()]);
 		return itemMenu;
 	}
 	
 	public static double[] getPrices(){
-		ArrayList<Double> listPrice = isPrice;
-		double[] priceMenu = new double[listPrice.size()];
+	//	ArrayList<Double> listPrice = isPrice;
+		double[] priceMenu = new double[isPrice.size()];
 		for (int x = 0; x< priceMenu.length; x++){
-			priceMenu[x] = listPrice.get(x);
+			priceMenu[x] = isPrice.get(x);
 		}
 		return priceMenu;
 	}
