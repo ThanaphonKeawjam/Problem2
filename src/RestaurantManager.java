@@ -19,8 +19,7 @@ public class RestaurantManager{
 	
 	public static ArrayList<String> isMenu = new ArrayList<String>();
 	public static ArrayList<Double> isPrice = new ArrayList<Double>();
-	public static int[] order = new int[1000];
-	public static int[] realQuantity = new int[1000];
+	public static ArrayList<Integer> order = new ArrayList<Integer>();
 	
 	public static void loadMenu(){
 		String filename = "data/menu.txt";
@@ -81,8 +80,8 @@ public class RestaurantManager{
 			System.out.println("Date: " + date + "  Time: " + time);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<isPrice.size(); j++){
-				if (price3[j]*order[j] != 0){
-				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",isMenu.get(j),order[j],price3[j]*order[j]);
+				if (price3[j]*order.get(j) != 0){
+				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",isMenu.get(j),order.get(j),price3[j]*order.get(j));
 				}
 			}
 			if (sum >= 1200){
@@ -92,7 +91,7 @@ public class RestaurantManager{
 				sum = sum*95/100;
 			}
 			for (int i = 0; i<isMenu.size(); i++){
-			Total = Total + order[i];
+			Total = Total + order.get(i);
 			}
 			System.out.println("+--------------------------+---------+-----------+");
 			System.out.printf("|Total\t\t\t   |\t%d    |\t%7.2f  |\n",Total,sum);
@@ -125,13 +124,23 @@ public class RestaurantManager{
  */
 	public static double calculatePrice(String choice, int quantity){
 		double price = 0;
+		int order2,real;
 		double[] price2 = getPrices();
+		ArrayList<Integer> realQuantity = new ArrayList<Integer>();
+		for (int y = 0; y<isMenu.size(); y++){
+			realQuantity.add(0);
+		}
 		int choice2 = Integer.parseInt(choice);
 		for (int i = 0; i < isMenu.size(); i++){
 			if (choice2 == i+1){
-				order[i] = order[i] + quantity;
-				realQuantity[i] = order[i] - realQuantity[i];
-				price =  realQuantity[i] * price2[i];
+				order2 = order.get(i) + quantity;
+				order.add(i, order2);
+				order.remove(i+1);
+				
+				real = quantity - realQuantity.get(i);
+				realQuantity.add(i, real);
+				realQuantity.remove(i+1);
+				price = real * price2[i];
 				break;
 			}
 		}
@@ -155,6 +164,7 @@ public class RestaurantManager{
  */
 	
 	public static void recordOrder(){
+		setValueOrder();
 		double sum = 0,realPrice = 0;
 		int quantity = 0;
 		String choice;
@@ -189,7 +199,18 @@ public class RestaurantManager{
 		printMenuList();
 		recordOrder();
 	}
+
+/**
+ * This method will onfigure an order variable
+ * to apply in calculatePrice method.
+ */
 	
+	public static void setValueOrder() {
+		for (int z = 0; z<isMenu.size(); z++){
+			order.add(0);
+		}
+	}
+
 	public static void main(String[] args) {
 		RestaurantManager.init();
 	}
