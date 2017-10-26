@@ -29,7 +29,6 @@ public class RestaurantManager {
 	}
 	
 	public static String[] getMenuItems(){
-	//	loadMenu();
 		String[] itemMenu  = isMenu.toArray(new String[isMenu.size()]);
 		return itemMenu;
 	}
