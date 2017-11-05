@@ -1,6 +1,15 @@
+package code;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+/**
+ * This class is used for reading files menu.txt
+ * and then store it in each variable.
+ * 
+ * @author Thanaphon Keawjam
+ */
 
 public class RestaurantManager {
 	

@@ -1,3 +1,4 @@
+package code;
 
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -15,21 +16,24 @@ public class SkeRestaurant{
 	
 	public static Scanner sc = new Scanner(System.in);
 	
+	static double sum = 0;
+	
 	public static ArrayList<Integer> order = new ArrayList<Integer>();
 		
 	public static void printMenuList(){
 		String[] menu = RestaurantManager.getMenuItems();
 		double[] price = RestaurantManager.getPrices();
+		String prompt = "[T] Total\n" + "[P] Payment\n" + "[M] Replaymenus\n" + "[E] Exit";
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
 		for (int i = 0; i<menu.length; i++){
 			System.out.printf("%d.) %s",i+1,menu[i]);
 			System.out.printf("\t\t%6.2f Baht.",price[i]);
 			System.out.println("");
 		}
-		System.out.println("[T] Total");
-		System.out.println("[P] Payment");
-		System.out.println("[E] Exit");
-		recordOrder();
+		System.out.println(prompt);
+	//	System.out.println("[T] Total");
+	//	System.out.println("[P] Payment");
+	//	System.out.println("[E] Exit");
 	}
 	
 	public static double printOrder(String choice,double sum){
@@ -127,18 +131,23 @@ public class SkeRestaurant{
  */
 	
 	public static void recordOrder(){
-		setValueOrder();
-		double sum = 0,realPrice = 0;
+		double realPrice = 0;
 		int quantity = 0;
 		String choice;
 		do {
 			System.out.print("Enter your Choice: ");
 			choice = sc.next();
 			realPrice = printOrder(choice,sum);
-			if ((!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P")) && !choice.equals(checkInt(choice))){
+			if ((!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P") && !choice.equalsIgnoreCase("M")) 
+					&& !choice.equals(checkInt(choice))){
 				System.out.println("Incorrect menu!!\nTry again.");
 				continue;
 			}
+			if (choice.equalsIgnoreCase("M")){
+				System.out.println();
+				printMenuList();
+				recordOrder();
+			}else
 			if (choice.equalsIgnoreCase("E")){
 				System.out.print("==== Thank you ====");
 				System.exit(0);
@@ -148,7 +157,7 @@ public class SkeRestaurant{
 				System.out.print("==== Thank you ====");
 				System.exit(0);
 			}else 
-			if (!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P")){
+			if (!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P") && !choice.equalsIgnoreCase("M")){
 			System.out.print("Enter Quantity: ");
 			quantity = sc.nextInt();
 			}else {
@@ -172,5 +181,7 @@ public class SkeRestaurant{
 	public static void main(String[] args) {
 		RestaurantManager.init();
 		printMenuList();
+		setValueOrder();
+		recordOrder();
 	}
 }
