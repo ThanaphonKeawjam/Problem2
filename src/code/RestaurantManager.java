@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,7 +40,7 @@ public class RestaurantManager {
 			if (line.startsWith("#")){
 				continue;
 			}
-			String[] array = line.split("; ");
+			String[] array = line.trim().split("; ");
 			isMenu.add(array[0]);
 			isPrice.add(Double.parseDouble(array[1]));
 		}
@@ -79,13 +80,16 @@ public class RestaurantManager {
 		String[] menu = getMenuItems();
 		String temp = "";
 		int i = 0;
+		LocalTime time = LocalTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+		String timenow = dtf.format(time);
 		for (String name : menu){
 			if (order[i] != 0){
 				temp = String.format(temp + "%-15s%5d\n", menu[i],order[i]);
 			}
 			i++;
 		}
-		return String.format("\nDate: " + LocalDate.now() + "\nTime: " + LocalTime.now() + 
+		return String.format("\nDate: " + LocalDate.now() + "\nTime: " + timenow + 
 				"\n\n%s\n%20.2f Baht\n==========================",temp,sum);
 		}
 	

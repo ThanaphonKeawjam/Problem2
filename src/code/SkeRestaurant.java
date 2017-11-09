@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -53,9 +54,11 @@ public class SkeRestaurant{
 		String[] menu3 = RestaurantManager.getMenuItems();
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+		String timenow = dtf.format(time);
 		if (choice.equalsIgnoreCase("T")){
 			System.out.println("\t\tSKE Restaurant");
-			System.out.println("Date: " + date + "  Time: " + time);
+			System.out.println("Date: " + date + "  Time: " + timenow);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
 			for (int j = 0; j<price3.length; j++){
 				if (price3[j]*order.get(j) != 0){
