@@ -1,0 +1,26 @@
+***All order for SKE-Restaurant***
+
+Date: 2017-11-09
+Time: 20:47:11.645
+
+Chickens           4
+Sandwich           1
+Coke               1
+Coffee             1
+Green-Tea          1
+
+=====================
+Date: 2017-11-09
+Time: 20:47:51.969
+
+Coffee             4
+
+=====================
+Date: 2017-11-09
+Time: 20:48:12.673
+
+Chickens           1
+Sandwich           1
+Spaghetti         11
+
+=====================
