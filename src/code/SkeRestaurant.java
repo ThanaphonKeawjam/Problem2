@@ -156,7 +156,7 @@ public class SkeRestaurant{
  * @throws IOException 
  */
 	
-	public static void recordOrder() throws IOException{
+	public static void selectOrder() throws IOException{
 		double realPrice = 0;
 		int quantity = 0;
 		String choice;
@@ -239,6 +239,6 @@ public class SkeRestaurant{
 		RestaurantManager.init();
 		printMenuList();
 		setValueOrder();
-		recordOrder();
+		selectOrder();
 	}
 }
