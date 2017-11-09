@@ -1,26 +1,33 @@
 ***All order for SKE-Restaurant***
-
 Date: 2017-11-09
-Time: 20:47:11.645
+Time: 22:33:41.337
 
-Chickens           4
-Sandwich           1
-Coke               1
-Coffee             1
-Green-Tea          1
+Pizza              1
+Chickens           1
 
-=====================
+              370.00 Baht
+==========================
 Date: 2017-11-09
-Time: 20:47:51.969
+Time: 22:34:15.865
 
-Coffee             4
+Pizza              6
 
-=====================
+             1425.00 Baht
+==========================
 Date: 2017-11-09
-Time: 20:48:12.673
+Time: 22:35:20.108
 
 Chickens           1
 Sandwich           1
-Spaghetti         11
+Spaghetti          1
+Coke               1
 
-=====================
+              250.00 Baht
+==========================
+Date: 2017-11-09
+Time: 22:35:45.590
+
+Green-Tea         30
+
+             1140.00 Baht
+==========================
