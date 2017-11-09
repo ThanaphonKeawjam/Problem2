@@ -17,7 +17,7 @@ public class SkeRestaurant{
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-	static double sum = 0;
+	public static double sum = 0;
 	
 	public static ArrayList<Integer> order = new ArrayList<Integer>();
 	
@@ -84,7 +84,7 @@ public class SkeRestaurant{
  * @param realPrice
  */
 	
-	public static void payMent(double realPrice){
+	public static double payMent(double realPrice){
 		double getMoney;
 		do{
 			if (realPrice >= 1200) realPrice = realPrice*95/100;
@@ -98,6 +98,7 @@ public class SkeRestaurant{
 			}
 			while (getMoney < realPrice);
 			System.out.printf("Change(Baht): %.2f\n",getMoney-realPrice);
+		return realPrice;
 	}
 	
 /**
@@ -164,8 +165,8 @@ public class SkeRestaurant{
 			System.out.print("Enter your Choice: ");
 			choice = sc.next();
 			realPrice = printOrder(choice,sum);
-			if ((!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P") && !choice.equalsIgnoreCase("M")) 
-					&& !choice.equals(checkInt(choice))){
+			if ((!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P") 
+				 && !choice.equalsIgnoreCase("M")) && !choice.equals(checkInt(choice))){
 				System.out.println("Incorrect menu!!\nTry again.");
 				continue;
 			}
@@ -179,12 +180,13 @@ public class SkeRestaurant{
 				System.exit(0);
 			}else 
 			if (choice.equalsIgnoreCase("P")){
-				payMent(realPrice);
-				System.out.print("==== Thank you ====");
+				sum = payMent(realPrice);
+				System.out.print("==== Thank you ====");;
 				record();
 				System.exit(0);
 			}else 
-			if (!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P") && !choice.equalsIgnoreCase("M")){
+			if (!choice.equalsIgnoreCase("E") && !choice.equalsIgnoreCase("T") && !choice.equalsIgnoreCase("P")
+				 && !choice.equalsIgnoreCase("M")){
 			System.out.print("Enter Quantity: ");
 			quantity = sc.nextInt();
 			}else {
@@ -200,28 +202,12 @@ public class SkeRestaurant{
  */
 
 	public static void record() throws IOException {
-		String allOrder = recordAllOrder();
-		RestaurantManager.writeToFile(allOrder);
-	}
-	
-/**
- * This method will record all order from user
- * when user select [P] Payment.	
- * @return
- */
-
-	public static String recordAllOrder() {
-		String[] menu = RestaurantManager.getMenuItems();
-		String temp = "";
-		int i = 0;
-		for (String name : menu){
-			if (order.get(i) != 0){
-				temp = String.format(temp + "%-15s%5d\n", menu[i],order.get(i));
-			}
-			i++;
+		int[] rOrder = new int[order.size()];
+		for (int i = 0; i<rOrder.length; i++){
+			rOrder[i] = order.get(i);
 		}
-		return String.format("\nDate: " + LocalDate.now() + "\nTime: " + LocalTime.now() + "\n\n%s\n=====================",temp);
-//		return "\n\n" + temp + "\n=======================";
+		String allOrder = RestaurantManager.recordAllOrder(rOrder,sum);
+		RestaurantManager.writeToFile(allOrder);
 	}
 
 /**

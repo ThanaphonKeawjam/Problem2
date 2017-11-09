@@ -5,12 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * This class is used for reading files menu.txt
- * and then store it in each variable.
+ * and then record it in each variable.
  * 
  * @author Thanaphon Keawjam
  */
@@ -24,8 +26,7 @@ public class RestaurantManager {
  * This method will load menu file from folder data.	
  */
 	
-	public static void loadMenu(){
-		String filename = "data/menu.txt";
+	public static void setMenu(String filename){
 		ClassLoader loader = RestaurantManager.class.getClassLoader();
 		InputStream in = loader.getResourceAsStream(filename);
 		if (in == null){
@@ -69,6 +70,26 @@ public class RestaurantManager {
 	}
 	
 /**
+ * This method will record all order from user
+ * when user select [P] Payment.	
+ * @return
+ */
+
+	public static String recordAllOrder(int[] order, double sum) {
+		String[] menu = getMenuItems();
+		String temp = "";
+		int i = 0;
+		for (String name : menu){
+			if (order[i] != 0){
+				temp = String.format(temp + "%-15s%5d\n", menu[i],order[i]);
+			}
+			i++;
+		}
+		return String.format("\nDate: " + LocalDate.now() + "\nTime: " + LocalTime.now() + 
+				"\n\n%s\n%20.2f Baht\n==========================",temp,sum);
+		}
+	
+/**
  * This method is write all order to file when user
  * select [P] Payment.		
  * @param allOrder
@@ -93,7 +114,8 @@ public class RestaurantManager {
  */
 	
 	public static void init(){
-		loadMenu();
+		String filename = "data/menu.txt";
+		setMenu(filename);
 	}
 
 }
