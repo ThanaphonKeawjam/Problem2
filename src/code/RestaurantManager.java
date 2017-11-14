@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * This class is used for reading files menu.txt
- * and then record it in each variable.
+ * This class is used for reading files from menu.txt
+ * and record a completed order to file.
  * 
  * @author Thanaphon Keawjam
  */
