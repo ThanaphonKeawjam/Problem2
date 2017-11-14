@@ -11,29 +11,32 @@ import java.util.ArrayList;
  * User interface for a menu and ordering system,
  * using console interface.
  * 
- * @author Thanaphon Keawjam;
+ * @author Thanaphon Keawjam
  */
 
 public class SkeRestaurant{
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-	public static double sum = 0;
+	private static double sum = 0;
 	
-	public static ArrayList<Integer> order = new ArrayList<Integer>();
+	private static ArrayList<Integer> order = new ArrayList<Integer>();
+	
+	private static String[] menu;
+	private static double[] prices;
 	
 /**
  * This method is print menu list.It will print all menus in SKE-Restaurant.	
  */
 		
 	public static void printMenuList(){
-		String[] menu = RestaurantManager.getMenuItems();
-		double[] price = RestaurantManager.getPrices();
+		menu = RestaurantManager.getMenuItems();
+		prices = RestaurantManager.getPrices();
 		String prompt = "[T] Total\n" + "[P] Payment\n" + "[M] DisplayMenus\n" + "[E] Exit";
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
 		for (int i = 0; i<menu.length; i++){
 			System.out.printf("%d.) %s",i+1,menu[i]);
-			System.out.printf("\t\t%6.2f Baht.",price[i]);
+			System.out.printf("\t\t%6.2f Baht.",prices[i]);
 			System.out.println("");
 		}
 		System.out.println(prompt);
@@ -50,8 +53,8 @@ public class SkeRestaurant{
 	
 	public static double printOrder(String choice,double sum){
 		int Total = 0;
-		double[] price3 = RestaurantManager.getPrices();
-		String[] menu3 = RestaurantManager.getMenuItems();
+		menu = RestaurantManager.getMenuItems();
+		prices = RestaurantManager.getPrices();
 		LocalDate date = LocalDate.now();
 		LocalTime time = LocalTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
@@ -60,9 +63,9 @@ public class SkeRestaurant{
 			System.out.println("\t\tSKE Restaurant");
 			System.out.println("Date: " + date + "  Time: " + timenow);
 			System.out.println("+------ Menu --------------+-- Qty --+-- Price --+");
-			for (int j = 0; j<price3.length; j++){
-				if (price3[j]*order.get(j) != 0){
-				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",menu3[j],order.get(j),price3[j]*order.get(j));
+			for (int j = 0; j<prices.length; j++){
+				if (prices[j]*order.get(j) != 0){
+				System.out.printf("|%-8s\t\t   |\t%d    |\t%7.2f  |\n",menu[j],order.get(j),prices[j]*order.get(j));
 				}
 			}
 			if (sum >= 1200){
@@ -71,7 +74,7 @@ public class SkeRestaurant{
 				System.out.println("|You got 5% discount.\t\t\t\t |");
 				sum = sum*95/100;
 			}
-			for (int i = 0; i<menu3.length; i++){
+			for (int i = 0; i<menu.length; i++){
 			Total = Total + order.get(i);
 			}
 			System.out.println("+--------------------------+---------+-----------+");
@@ -114,13 +117,13 @@ public class SkeRestaurant{
 	public static double calculatePrice(String choice, int quantity){
 		double price = 0;
 		int order2,real;
-		double[] price2 = RestaurantManager.getPrices();
+		prices = RestaurantManager.getPrices();
 		ArrayList<Integer> realQuantity = new ArrayList<Integer>();
-		for (int y = 0; y<price2.length; y++){
+		for (int y = 0; y<prices.length; y++){
 			realQuantity.add(0);
 		}
 		int choice2 = Integer.parseInt(choice);
-		for (int i = 0; i < price2.length; i++){
+		for (int i = 0; i < prices.length; i++){
 			if (choice2 == i+1){
 				order2 = order.get(i) + quantity;
 				order.add(i, order2);
@@ -129,7 +132,7 @@ public class SkeRestaurant{
 				real = quantity - realQuantity.get(i);
 				realQuantity.add(i, real);
 				realQuantity.remove(i+1);
-				price = real * price2[i];
+				price = real * prices[i];
 				break;
 			}
 		}
