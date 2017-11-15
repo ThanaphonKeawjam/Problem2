@@ -28,8 +28,8 @@ public class Restaurant{
  */
 		
 	public static void printMenuList(){
-		menu = RestaurantManager.getMenuItems(); //get menu items from RestaurantManager and save them to attribute.
-		prices = RestaurantManager.getPrices(); // get prices from RestaurantManager and save them to attribute.
+		menu = RestaurantManager.getMenuItems();  //get menu items from RestaurantManager and save them to attribute.
+		prices = RestaurantManager.getPrices();  // get prices from RestaurantManager and save them to attribute.
 		String prompt = "[T] Total\n" + "[P] Payment\n" + "[M] DisplayMenus\n" + "[E] Exit";
 		System.out.println("--------- Welcome to SKE Restaurant ---------");
 		for (int i = 0; i<menu.length; i++){
